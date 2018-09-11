@@ -34,7 +34,7 @@ def recognize(x):
 
 
 if __name__ == '__main__':
-    img = getIMG('test.png')
+    img = getIMG('captcha.png')
     img = torch.Tensor(img)
     print(recognize(img))
     img = ToArray(img)
