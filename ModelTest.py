@@ -1,5 +1,5 @@
 from Models import *
-from DataProcessing import To_Array, show
+from DataProcessing import show
 
 with open('captcha_data', 'rb') as f:
     data = torch.load(f)
