@@ -1,7 +1,7 @@
 Captcha Recognizer is a simple Python program using convolutional neural networks to recognize words in a specific type of Captcha. 
 It is implemented using Pytorch. The targetted captcha are those found on : https://w6.ab.ust.hk/fbs_user/html/main.htm<br><br>
 The current weight best weight for the model has around 80% accuracy by each character and 33% full correct accuracy.<br><br>
-The model is first trained on ten thousands of generated sample which is similar to true captcha with auto generated labels. After that, I manually label a few hundreds true captcha and for further adjust the parameters of the model. Without the generator, I need to manually labels a serveral thousands of labels to get the model to work.
+The model is first trained on ten thousands of generated sample which is similar to true captcha with auto generated labels. After that, I manually label a few hundreds true captcha and for further adjust of the parameters of the model. Without the generator, I need to manually labels a serveral thousands of labels to get the model to work.
 #
 <b>captcha_reducer.py</b> : This script is for preprocessing the input image.<br>
 <b>Models.py</b> : This file define the three neural models in this program. Including encoder, decoder and classifier.<br>
