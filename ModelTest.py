@@ -14,7 +14,6 @@ with open('Cls_param', 'rb') as f:
 
 
 gpu0 = 'cuda:0'
-gpu1 = 'cuda:1'
 
 
 class Tester(nn.Module):

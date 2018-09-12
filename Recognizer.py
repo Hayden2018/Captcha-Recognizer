@@ -21,6 +21,7 @@ def getIMG(name):
     return img
 
 
+# (50*200 Pytorch Tensor) return string
 def recognize(x):
     x = x.view(1, 1, 50, 200)
     x = Net(x)
