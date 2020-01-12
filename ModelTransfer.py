@@ -14,9 +14,6 @@ with open('Decode_param_gen', 'rb') as f:
 with open('Cls_param_gen', 'rb') as f:
     cls_param = torch.load(f)
 
-gpu0 = 'cuda:0'
-gpu1 = 'cuda:1'
-
 
 class TransferTrainer(nn.Module):
 
@@ -40,14 +37,11 @@ class TransferTrainer(nn.Module):
         return torch.stack([y, r])
 
 
-data = data.to(gpu0)
-labels = labels.to(gpu0)
-
-
-train = TransferTrainer(net_param, dec_param, cls_param).to(gpu0)
-train = nn.DataParallel(train, output_device=gpu0)
-Optimizer = torch.optim.Adam(train.parameters(), lr=0.00005)
 torch.backends.cudnn.benchmark = True
+data = data.cuda()
+labels = labels.cuda()
+train = TransferTrainer(net_param, dec_param, cls_param).cuda()
+Optimizer = torch.optim.Adam(train.parameters(), lr=0.00005)
 
 
 s = time.time()
@@ -70,11 +64,11 @@ plt.show()
 
 
 with open('Net_param', 'wb') as f:
-    M = train.module.Net
+    M = train.Net
     torch.save(M.state_dict(), f)
 with open('Decode_param', 'wb') as f:
-    M = train.module.Dec
+    M = train.Dec
     torch.save(M.state_dict(), f)
 with open('Cls_param', 'wb') as f:
-    M = train.module.Cls
+    M = train.Cls
     torch.save(M.state_dict(), f)

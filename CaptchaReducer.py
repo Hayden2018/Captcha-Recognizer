@@ -25,36 +25,6 @@ class CaptchaReducer:
             self.captcha.save(self.filename)
             print('Saved as:', self.filename)
 
-
-    # input the first row pixel and last row pixel and the current row,
-    # return the pixel of the current row in [R, G, B].
-    # @staticmethod
-    # def color_difference(pixel_head, pixel_foot, j):
-    #     red = abs((int(pixel_foot[0]) - int(pixel_head[0]))) * j / 50 + pixel_head[0]
-    #     green = abs((int(pixel_foot[1]) - int(pixel_head[1]))) * j / 50 + pixel_head[1]
-    #     blue = abs((int(pixel_foot[2]) - int(pixel_head[2]))) * j / 50 + pixel_head[2]
-    #     return [red, green, blue]
-
-    # generate background
-    # def background_generator(self):
-        # Used a sample image to generate background.
-        # img = Image.open(PATH + '4g27g.png')
-        # Convert from image object to numpy array.
-        # data = np.array(img.convert('RGB'))
-        # Extract all the pixels of the first row and the last row.
-    #    data_head = self.captcha[0]
-    #    data_foot = self.captcha[-1]
-        # Create an empty list.
-    #    bg = []
-        # Calculate the color difference in data_head and data_foot for creating a colour gradient
-        # and to meet the size of the captcha 200 * 50.
-    #    for j in range(50):
-    #        tmp = []
-    #        for i in range(200):
-    #            tmp.append(self.color_difference(data_head[i], data_foot[i], j))
-    #        bg.append(tmp)
-    #    return bg
-
     # remove background color in captcha so that only words and a line is left.
     # if the difference of a pixel between 2 images is smaller than 10, then make it black.
     # The input should be two 3D np array and returning a 3D np array.
@@ -113,15 +83,8 @@ class CaptchaReducer:
             for i, captcha_pixel in enumerate(captcha[j]):
                 if self.pixel_aside_is_black(tmp, i, j, threshold) or abs(int(captcha_pixel[0]) - int(COLOR[0])) < threshold and abs(int(captcha_pixel[1]) - int(COLOR[1])) < threshold and abs(int(captcha_pixel[2]) - int(COLOR[2])) < threshold:
                     tmp[j][i] = WHITE.copy()
-                    # tmp[j + 1][i] = WHITE.copy()
-                    # tmp[j + 2][i] = WHITE.copy()
-                    # tmp[j + 3][i] = WHITE.copy()
-                    # tmp[j + 4][i] = WHITE.copy()
 
         captcha = np.array(tmp)
-        # Convert numpy array to image object
-        # tmp = Image.fromarray(np.uint8(tmp))
-        # tmp.show()
         return captcha
 
 
@@ -136,13 +99,8 @@ def main():
     for directories, folders, files in os.walk(cwd + CAPTCHA_PATH):
         os.chdir(directories)
         for file in files:
-            # try:
             if file.endswith('.png'):
                 reducer(file)
-            # except Exception as exception:
-            #     print(type(exception).__name__)
-            #     print(cwd + CAPTCHA_PATH + file)
-            #     pass
 
 
 if __name__ == "__main__":

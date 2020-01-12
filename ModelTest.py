@@ -1,5 +1,4 @@
 from Models import *
-from DataProcessing import show
 
 with open('captcha_data', 'rb') as f:
     data = torch.load(f)
@@ -11,9 +10,6 @@ with open('Decode_param', 'rb') as f:
     dec_param = torch.load(f)
 with open('Cls_param', 'rb') as f:
     cls_param = torch.load(f)
-
-
-gpu0 = 'cuda:0'
 
 
 class Tester(nn.Module):
@@ -34,13 +30,14 @@ class Tester(nn.Module):
         return y, r
 
 
-data = data.to(gpu0)
-labels = labels.to(gpu0)
-model = Tester(net_param, cls_param, dec_param).to(gpu0)
+torch.backends.cudnn.benchmark = True
+data = data.cuda()
+labels = labels.cuda()
+model = Tester(net_param, cls_param, dec_param).cuda()
 
 
 c, x = model(data[691:711])
 c = torch.argmax(c, dim=1)
-l = labels[691:711]
-accuracy = float((l == c).sum())
-print(accuracy / (20 * 5))
+la = labels[691:711]
+accuracy = float((la == c).sum())
+print('Accuracy:', accuracy / (20 * 5))

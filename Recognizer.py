@@ -1,6 +1,6 @@
 from DataProcessing import *
 from Models import *
-from captcha_reducer import *
+from CaptchaReducer import *
 
 
 with open('Net_param', 'rb') as f:
@@ -36,7 +36,7 @@ def recognize(x):
 
 if __name__ == '__main__':
     img = getIMG('captcha.png')
-    img = torch.Tensor(img)
+    img = torch.tensor(img)
     print(recognize(img))
     img = ToArray(img)
     img = img.reshape(50, 200)
